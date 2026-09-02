@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "exploidus-edr"
+version = "1.0.0"
+description = "High-Integrity Endpoint Detection & Response (EDR) and Antivirus Suite"
+readme = "README.md"
+license = { text = "AGPL-3.0-or-later" }
+authors = [{ name = "Rahad Bhuiya", email = "rahadbhuiya2021@gmail.com" }]
+requires-python = ">=3.10"
+keywords = ["antivirus", "security", "edr", "malware", "yara", "heuristics", "exploidus"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+]
+dependencies = [
+    "watchdog>=4.0.0",
+    "pefile>=2023.2.7",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+gui      = ["customtkinter>=5.2.0"]
+yara     = ["yara-python>=4.5.0"]
+behavior = ["psutil>=5.9.0"]
+full     = ["customtkinter>=5.2.0", "yara-python>=4.5.0", "psutil>=5.9.0"]
+dev      = ["pytest>=7.0.0", "pytest-cov>=4.0.0", "black>=23.0.0", "ruff>=0.1.0"]
+
+[project.scripts]
+exploidus-edr     = "edr.cli:main"
+xedr              = "edr.cli:main"
+exploidus-edr-gui = "edr.gui:main"
+
+[project.urls]
+Homepage    = "https://github.com/Exploidus/exploidus-edr"
+Repository  = "https://github.com/Exploidus/exploidus-edr"
+"Bug Tracker" = "https://github.com/Exploidus/exploidus-edr/issues"
+
+[tool.setuptools.packages.find]
+where   = ["."]
+include = ["edr*"]
+
+[tool.black]
+line-length    = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+select      = ["E", "F", "W", "I"]
+
+[tool.pytest.ini_options]
+testpaths    = ["tests"]
+python_files = ["test_*.py"]
